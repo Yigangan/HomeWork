@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +31,7 @@ public class GrowthServiceImpl extends ServiceImpl<GrowthMapper, Growth> impleme
 
     @Override
     public Page<FundGrowthDto> getFundGrowthPage(int pageNum, int pageSize, int sortField, int sortDirection) {
+        //getFundGrowthListCompute();
         Page<Growth> pageInfo=new Page<>(pageNum,pageSize);
         Page<FundGrowthDto> fundGrowthDtoPage=new Page<>(pageNum,pageSize);
         LambdaQueryWrapper<Growth> lambdaQueryWrapper=new LambdaQueryWrapper();
@@ -96,10 +99,10 @@ public class GrowthServiceImpl extends ServiceImpl<GrowthMapper, Growth> impleme
     public void getFundGrowthListCompute() {
         System.out.println("重新计算比率");
         List<Fund> recentFundList = fundMapper.getRecentFundList();
-       recentFundList.stream().map(item->{
+       recentFundList.forEach(item->{
            Fund fund = fundMapper.selectOne(Wrappers.<Fund>lambdaQuery().eq(Fund::getFundCode, item.getFundCode()).eq(Fund::getEndDate, item.getEndDate()));
            item.setUnitNetVal(fund.getUnitNetVal());
-           return setGrowth(item);
+           setGrowth(item);
        });
     }
 
@@ -109,11 +112,14 @@ public class GrowthServiceImpl extends ServiceImpl<GrowthMapper, Growth> impleme
         /**
          * 以9月8号为测试用例
          */
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c1 = Calendar.getInstance();
-        c1.setTime(new Date(System.currentTimeMillis()));
-        c1.add(Calendar.DATE, -2);
+        try {
+            c1.setTime(sdf.parse("2023-09-08"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Date endDate = new Date(c1.getTime().getTime());
-
         //正常情况
         //Date endDate=new Date(System.currentTimeMillis());
         Calendar c = Calendar.getInstance();
