@@ -3,7 +3,9 @@ package com.tjut.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tjut.dto.FundGrowthDto;
 import com.tjut.service.GrowthService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,13 @@ public class GrowthController {
 
     @Autowired
     private GrowthService growthService;
+
+
+    @DeleteMapping("/deleteGrowth")
+    public String deleteAllGrowth(){
+        boolean remove = growthService.remove(null);
+        return remove?"success":"fail";
+    }
 
     /*
     请开发接口

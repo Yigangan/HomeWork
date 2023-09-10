@@ -1,5 +1,6 @@
 package com.tjut.controller;
 
+import com.tjut.service.FundService;
 import com.tjut.service.ImportSourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,9 @@ public class FundController {
     @Autowired
     private ImportSourceService importSourceService;
 
+    @Autowired
+    private FundService fundService;
+
     @PostMapping(value = "/excel")
     public String excelProTbZbzs(@RequestParam("file") MultipartFile file){
         try {
@@ -22,6 +26,10 @@ public class FundController {
         }
     }
 
+    @DeleteMapping("/delete")
+    public String deleteExcel(){
+        return fundService.remove(null)?"success":"fail";
+    }
 
 
 }
