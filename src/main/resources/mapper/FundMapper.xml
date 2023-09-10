@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjut.mapper.FundMapper">
+
+    <resultMap id="fundMap" type="com.tjut.pojo.Fund">
+        <id column="fund_code" property="fundCode"/>
+        <result column="end_date" property="endDate"/>
+    </resultMap>
+    <select id="getRecentFundList" resultMap="fundMap">
+        SELECT fund_code,MAX(end_date) AS end_date FROM tb_fund GROUP BY fund_code
+    </select>
+</mapper>
