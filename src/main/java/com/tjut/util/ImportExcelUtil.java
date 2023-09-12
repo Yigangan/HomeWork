@@ -90,9 +90,9 @@ public class ImportExcelUtil {
      */
     public  static Object getCellValue(Cell cell){
         Object value = null;
-        //DecimalFormat df = new DecimalFormat("0");  //格式化number String字符
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");  //日期格式化
+//      SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");  //日期格式化
         DecimalFormat df = new DecimalFormat("0.0000");  //格式化数字
  
         if (cell!=null){

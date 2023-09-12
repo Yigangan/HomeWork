@@ -7,8 +7,15 @@
     <resultMap id="fundMap" type="com.tjut.pojo.Fund">
         <id column="fund_code" property="fundCode"/>
         <result column="end_date" property="endDate"/>
+        <result column="unit_net_val" property="unitNetVal"/>
     </resultMap>
     <select id="getRecentFundList" resultMap="fundMap">
-        SELECT fund_code,MAX(end_date) AS end_date FROM tb_fund GROUP BY fund_code
+        SELECT a.fund_code,a.end_date,a.unit_net_val
+        FROM tb_fund AS a,(
+            SELECT fund_code,MAX(end_date) AS end_date
+            FROM tb_fund
+            GROUP BY fund_code
+        ) AS b
+        WHERE a.fund_code = b.fund_code AND a.end_date = b.end_date;
     </select>
 </mapper>

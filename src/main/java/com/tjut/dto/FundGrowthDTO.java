@@ -1,14 +1,12 @@
 package com.tjut.dto;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 
 @Data
-public class FundGrowthDto {
+public class FundGrowthDTO {
     private String fundCode;
 
     private String fundShortName;
